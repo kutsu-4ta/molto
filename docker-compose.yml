@@ -22,7 +22,7 @@ services:
       - MYSQL_USER=docker_user
       - MYSQL_PASSWORD=docker_pass
     ports:
-      - '13306:3306'
+      - '3306:3306'
     volumes:
       - ./db/mysql/data:/var/lib/mysql
       - ./db/mysql/init:/docker-entrypoint-initdb.d
