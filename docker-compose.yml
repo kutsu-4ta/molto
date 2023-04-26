@@ -7,7 +7,7 @@ services:
     environment:
       - NODE_ENV=development
     volumes:
-      - ./:/var/www/html
+      - ./www:/var/www
       - ./docker/web/apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
     ports:
       - '3000:80'
