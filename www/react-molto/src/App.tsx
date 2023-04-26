@@ -1,5 +1,8 @@
 import React from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import Login from './views/login/_login';
+import Home from './views/home/_home';
+import MyPage from './views/myPage/_myPage';
 
 const App: React.FunctionComponent = () => {
   return (
@@ -8,7 +11,7 @@ const App: React.FunctionComponent = () => {
               <div className="App">
                   <header className="App-header">
                   </header>
-                  <h1>Hello React Router</h1>
+                  <h1>Molto</h1>
               </div>
               <Routes>
                   <Route path="/" element={<Index/>}/>
@@ -27,20 +30,8 @@ const App: React.FunctionComponent = () => {
   );
 }
 
-const Login: React.FunctionComponent = () => {
-    return <h2>Login</h2>;
-}
-
 const Index: React.FunctionComponent = () => {
     return <h2>Index</h2>;
-}
-
-const Home: React.FunctionComponent = () => {
-    return <h2>Home</h2>;
-}
-
-const MyPage: React.FunctionComponent = () => {
-    return <h2>MyPage</h2>;
 }
 
 export default App;
