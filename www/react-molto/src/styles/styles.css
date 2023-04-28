@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .content-bg {
     background-color: #121212;
     margin: 0px 0px !important;
@@ -26,6 +30,12 @@
 }
 .ant-menu-sub {
     background-color: #21212f !important;
+}
+
+.ant-layout-content {
+    background-color: #121212 !important;
+    margin: 0 !important;
+    padding-left: 1rem !important;
 }
 
 /*ヘッダー*/
