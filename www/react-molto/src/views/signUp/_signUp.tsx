@@ -2,14 +2,16 @@ import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
 
-const redirectPathToSignUp         = '/signUp';
+const redirectPathToLogin          = '/login';
 
-const Login: () => JSX.Element = () => {
+const SignUp: () => JSX.Element = () => {
+    const [passwordVisible, setPasswordVisible] = React.useState(false);
+
     return (
         <div className="container" style={{color: "#d7d7d7", paddingLeft: 30}}>
             <section className="featured">
-                <h2>LOGIN</h2>
-                <div className="login">
+                <h2>SIGN UP</h2>
+                <div className="sign-up">
                     <Divider/>
                     <Row>
                         <Col span={3} offset={6} style={{marginRight:0}}>
@@ -39,12 +41,12 @@ const Login: () => JSX.Element = () => {
                         </Col>
                     </Row>
                     <Divider/>
-                    <Divider/>
                     <Row>
                         <Col span={3} offset={6} style={{marginRight:0}}>
+                            <p>PassWord (ReInput)</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <Button style={{width: 80}} type="primary">login</Button>
+                            <Input.Password required placeholder="inputStrongPassWord" visibilityToggle={{visible: passwordVisible, onVisibleChange: setPasswordVisible}}/>
                         </Col>
                     </Row>
                     <Divider/>
@@ -52,7 +54,15 @@ const Login: () => JSX.Element = () => {
                         <Col span={3} offset={6} style={{marginRight:0}}>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <a href={redirectPathToSignUp}>please sign up. if you do not have any account.</a>
+                            <Button style={{width: 80}} type="primary">signUp</Button>
+                        </Col>
+                    </Row>
+                    <Divider/>
+                    <Row>
+                        <Col span={3} offset={6} style={{marginRight:0}}>
+                        </Col>
+                        <Col span={9} offset={6} style={{marginLeft:0}}>
+                            <a href={redirectPathToLogin}>please login. if you have a account.</a>
                         </Col>
                     </Row>
                 </div>
@@ -61,4 +71,4 @@ const Login: () => JSX.Element = () => {
     );
 };
 
-export default Login;
+export default SignUp;

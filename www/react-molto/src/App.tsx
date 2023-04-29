@@ -16,13 +16,15 @@ import NowPlaying from "./views/nowPlaying/_nowPlaying";
 import ArtWork from "./views/artWork/_artWork";
 import './styles/styles.css';
 import AccountSetting from "./views/accountSetting/_accountSetting";
+import SignUp from "./views/signUp/_signUp";
 
 // 遷移先 TODO: 【低】定数ファイル
-const redirectPathToLogin   = '/login';
-const redirectPathToHome    = '/home';
-const redirectPathToArtist  = '/artist';
-const redirectPathToArtWork = '/artWork';
-const redirectPathToNowPlaying = '/nowPlaying';
+const redirectPathToSignUp         = '/signUp';
+const redirectPathToLogin          = '/login';
+const redirectPathToHome           = '/home';
+const redirectPathToArtist         = '/artist';
+const redirectPathToArtWork        = '/artWork';
+const redirectPathToNowPlaying     = '/nowPlaying';
 const redirectPathToAccountSetting = '/accountSetting';
 
 // antDesignコンポーネント
@@ -68,6 +70,9 @@ const App: React.FunctionComponent = () => {
                             </Breadcrumb>
                             */}
                                     <div>
+                                        <Routes>
+                                            <Route path={redirectPathToSignUp} element={<SignUp/>}/>
+                                        </Routes>
                                         <Routes>
                                             <Route path={redirectPathToLogin} element={<Login/>}/>
                                         </Routes>
