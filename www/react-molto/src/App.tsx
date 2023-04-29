@@ -15,6 +15,7 @@ import Artist from "./views/artist/_artist";
 import NowPlaying from "./views/nowPlaying/_nowPlaying";
 import ArtWork from "./views/artWork/_artWork";
 import './styles/styles.css';
+import AccountSetting from "./views/accountSetting/_accountSetting";
 
 // 遷移先 TODO: 【低】定数ファイル
 const redirectPathToLogin   = '/login';
@@ -22,6 +23,7 @@ const redirectPathToHome    = '/home';
 const redirectPathToArtist  = '/artist';
 const redirectPathToArtWork = '/artWork';
 const redirectPathToNowPlaying = '/nowPlaying';
+const redirectPathToAccountSetting = '/accountSetting';
 
 // antDesignコンポーネント
 const { Header, Sider, Content, Footer} = Layout;
@@ -81,6 +83,9 @@ const App: React.FunctionComponent = () => {
                                         <Routes>
                                             <Route path={redirectPathToNowPlaying} element={<NowPlaying/>}/>
                                         </Routes>
+                                        <Routes>
+                                            <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
+                                        </Routes>
                                     </div>
                                 </Content>
                                 <Footer style={{textAlign: 'center'}}>Ant Design ©2023 Created by Ant UED</Footer>
@@ -126,7 +131,7 @@ const HeaderNav: React.FunctionComponent = () => {
             _generateMenuItem(<a href={'/profile'}>profile</a>, '1'),
             _generateMenuItem(<a href={'/your-works'}>works</a>, '2'),
             _generateMenuItem(<a href={'/wip'}>WIP</a>, '3'),
-            _generateMenuItem(<a href={'/account-setting'}>account Setting</a>, '4'),
+            _generateMenuItem(<a href={redirectPathToAccountSetting}>account Setting</a>, '4'),
         ]),
     ];
 
