@@ -2,18 +2,41 @@ import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
 
-import {signUpFormUserIdState} from "../../atoms/signUpFormState";
+import {signUpFormUserIdState, signUpFormPassWordState, signUpFormReInputPassWordState} from "../../atoms/signUpFormState";
 import {useRecoilState} from "recoil";
 
 const redirectPathToLogin          = '/login';
 
 const SignUp: () => JSX.Element = () => {
-    const [passwordVisible, setPasswordVisible] = React.useState(false);
     const [signUpFormUserId, setSignUpFormUserId] = useRecoilState(signUpFormUserIdState);
+    const [signUpFormPassWord, setSignUpFormPassWord] = useRecoilState(signUpFormPassWordState);
+    const [signUpFormReInputPassWord, setSignUpFormReInputPassWord] = useRecoilState(signUpFormReInputPassWordState);
+    const [passwordVisible, setPasswordVisible] = React.useState(false);
 
-    const onChangeUserIdHandler = (event: React.ChangeEvent<HTMLInputElement>): void =>{
+    const onChangeUserIdHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const formInputs = event.target.value;
+        // TODO:バリデーションチェック
         setSignUpFormUserId(formInputs);
+    }
+    const onChangePassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const formInputs = event.target.value;
+        // TODO:バリデーションチェック
+        setSignUpFormPassWord(formInputs);
+    }
+    const onChangeReInputPassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const formInputs = event.target.value;
+        // TODO:バリデーションチェック
+        setSignUpFormReInputPassWord(formInputs);
+    }
+
+    const submitSignUp = (): void => {
+        const formInputData = [
+            signUpFormUserId,
+            signUpFormPassWord
+        ];
+
+        // TODO:APIでリクエスト投げる
+        console.log(formInputData);
     }
 
     return (
@@ -50,7 +73,13 @@ const SignUp: () => JSX.Element = () => {
                             <p>PassWord</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <Input.Password required placeholder="inputStrongPassWord" iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}/>
+                            <Input.Password required
+                                            placeholder="inputStrongPassWord"
+                                            iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+                                            value={signUpFormPassWord}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangePassWordHandler(event); }}
+                                            visibilityToggle={{visible: passwordVisible, onVisibleChange: setPasswordVisible}}
+                            />
                         </Col>
                     </Row>
                     <Divider/>
@@ -59,7 +88,13 @@ const SignUp: () => JSX.Element = () => {
                             <p>PassWord (ReInput)</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <Input.Password required placeholder="inputStrongPassWord" visibilityToggle={{visible: passwordVisible, onVisibleChange: setPasswordVisible}}/>
+                            <Input.Password required
+                                            placeholder="inputStrongPassWord"
+                                            iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+                                            value={signUpFormReInputPassWord}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangeReInputPassWordHandler(event); }}
+                                            visibilityToggle={{visible: passwordVisible, onVisibleChange: setPasswordVisible}}
+                            />
                         </Col>
                     </Row>
                     <Divider/>
@@ -67,7 +102,7 @@ const SignUp: () => JSX.Element = () => {
                         <Col span={3} offset={6} style={{marginRight:0}}>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <Button style={{width: 80}} type="primary">signUp</Button>
+                            <Button style={{width: 80}} type="primary" onClick={submitSignUp}>signUp</Button>
                         </Col>
                     </Row>
                     <Divider/>
@@ -75,7 +110,7 @@ const SignUp: () => JSX.Element = () => {
                         <Col span={3} offset={6} style={{marginRight:0}}>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <a href={redirectPathToLogin}>please login. if you have a account.</a>
+                            <a href={redirectPathToLogin}>please login if you have a account.</a>
                         </Col>
                     </Row>
                 </div>

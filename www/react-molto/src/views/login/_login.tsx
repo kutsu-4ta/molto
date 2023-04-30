@@ -52,7 +52,7 @@ const Login: () => JSX.Element = () => {
                         <Col span={3} offset={6} style={{marginRight:0}}>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <a href={redirectPathToSignUp}>please sign up. if you do not have any account.</a>
+                            <a href={redirectPathToSignUp}>please sign up if you do not have any account.</a>
                         </Col>
                     </Row>
                 </div>
