@@ -2,30 +2,114 @@ import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
 
-import {signUpFormUserIdState, signUpFormPassWordState, signUpFormReInputPassWordState} from "../../atoms/signUpFormState";
+import {
+    // インプット
+    signUpFormUserIdState,
+    signUpFormPassWordState,
+    signUpFormReInputPassWordState,
+    // エラーメッセージ
+    signUpFormUserIdErrorState,
+    signUpFormPassWordErrorState,
+    signUpFormReInputPassWordErrorState
+} from "../../atoms/signUpFormState";
 import {useRecoilState} from "recoil";
 
-const redirectPathToLogin          = '/login';
+const redirectPathToLogin = '/login';
 
 const SignUp: () => JSX.Element = () => {
     const [signUpFormUserId, setSignUpFormUserId] = useRecoilState(signUpFormUserIdState);
     const [signUpFormPassWord, setSignUpFormPassWord] = useRecoilState(signUpFormPassWordState);
     const [signUpFormReInputPassWord, setSignUpFormReInputPassWord] = useRecoilState(signUpFormReInputPassWordState);
+    const [signUpFormUserIdError, setSignUpFormUserIdError] = useRecoilState(signUpFormUserIdErrorState);
+    const [signUpFormPassWordError, setSignUpFormPassWordError] = useRecoilState(signUpFormPassWordErrorState);
+    const [signUpFormReInputPassWordError, setSignUpFormReInputPassWordError] = useRecoilState(signUpFormReInputPassWordErrorState);
     const [passwordVisible, setPasswordVisible] = React.useState(false);
+
+    interface validationRuleType {
+        rule: string;
+        message: string;
+    }
+
+    const validationCheck = (inputForm: string, validationRules: validationRuleType[]): string => {
+        const errors: string[] = validationRules.map((rule) => {
+            const isCheckRequired = rule.rule === 'required';
+            const isFilled = inputForm.length > 0;
+
+            // 必須
+            if( isCheckRequired ){
+                if(!isFilled){
+                    console.log(inputForm, '必須');
+                    return rule.message;
+                }
+                return '';
+            }
+
+            if (isFilled && (inputForm.match(rule.rule) == null)) {
+                return rule.message;
+            }
+            return '';
+        });
+
+        let errorMessage = '';
+        errors.forEach((error: string) => {
+            if (error !== '') {
+                errorMessage += error;
+            }
+        });
+
+        return errorMessage;
+    }
 
     const onChangeUserIdHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const formInputs = event.target.value;
-        // TODO:バリデーションチェック
+        const validationRules: validationRuleType[] = [
+            {
+                'rule': 'required',
+                'message': 'UserId is required'
+            },
+            // TODO:バリデーションチェック
+            // {
+            //     'rule': '^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{4,15}$',
+            //     'message':'characters you can use are these \'a-Z, 0-9, ./?-!@#$%&*()_+\' '
+            // }
+        ];
+        const errorMessage: string = validationCheck(formInputs, validationRules);
+        setSignUpFormUserIdError(errorMessage);
         setSignUpFormUserId(formInputs);
     }
     const onChangePassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const formInputs = event.target.value;
-        // TODO:バリデーションチェック
+        const validationRules: validationRuleType[] = [
+            {
+                'rule': 'required',
+                'message': 'PassWord is required'
+            },
+            // TODO:バリデーションチェック
+            // {
+            //     'rule': '^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{4,15}$',
+            //     'message':'characters you can use are these \'a-Z, 0-9, ./?-!@#$%&*()_+\' '
+            // }
+        ];
+        const errorMessage: string = validationCheck(formInputs, validationRules);
+        setSignUpFormPassWordError(errorMessage);
         setSignUpFormPassWord(formInputs);
     }
     const onChangeReInputPassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
-        const formInputs = event.target.value;
         // TODO:バリデーションチェック
+        const formInputs = event.target.value;
+        const validationRules: validationRuleType[] = [
+            {
+                'rule': 'required',
+                'message': 'PassWord(ReInput) is required'
+            },
+            // TODO:バリデーションチェック
+            // {
+            //     'rule': '^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{4,15}$',
+            //     'message':'characters you can use are these \'a-Z, 0-9, ./?-!@#$%&*()_+\' '
+            // }
+        ];
+        const errorMessage: string = validationCheck(formInputs, validationRules);
+        setSignUpFormReInputPassWordError(errorMessage);
         setSignUpFormReInputPassWord(formInputs);
     }
 
@@ -50,6 +134,7 @@ const SignUp: () => JSX.Element = () => {
                             <p>UserId</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
+                            <p className={"form-error"}>&nbsp;{signUpFormUserIdError}</p>
                             <Input required
                                    placeholder="moltoUser"
                                    value={signUpFormUserId}
@@ -73,6 +158,7 @@ const SignUp: () => JSX.Element = () => {
                             <p>PassWord</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
+                            <p className={"form-error"}>&nbsp;{signUpFormPassWordError}</p>
                             <Input.Password required
                                             placeholder="inputStrongPassWord"
                                             iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
@@ -88,6 +174,7 @@ const SignUp: () => JSX.Element = () => {
                             <p>PassWord (ReInput)</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
+                            <p className={"form-error"}>&nbsp;{signUpFormReInputPassWordError}</p>
                             <Input.Password required
                                             placeholder="inputStrongPassWord"
                                             iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
