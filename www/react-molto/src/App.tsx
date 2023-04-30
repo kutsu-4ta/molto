@@ -17,6 +17,7 @@ import ArtWork from "./views/artWork/_artWork";
 import './styles/styles.css';
 import AccountSetting from "./views/accountSetting/_accountSetting";
 import SignUp from "./views/signUp/_signUp";
+import { RecoilRoot } from 'recoil';
 
 // 遷移先 TODO: 【低】定数ファイル
 const redirectPathToSignUp         = '/signUp';
@@ -35,71 +36,75 @@ const App: React.FunctionComponent = () => {
     // const { token: { colorBgContainer },} = theme.useToken();
 
     return (
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: '#632fff',
-                    colorBgBase: '#ffffff',
-                    colorBgContainer: '#ffffff',
-                    colorBgLayout: '#000000',
-                    colorBgElevated: '#00b96b',
-                    colorText: 'rgba(0, 0, 0, 0.88)',
-                    colorTextDescription: 'rgba(0, 0, 0, 0.45)',
-                    colorTextHeading: 'rgba(0, 0, 0, 0.88)'
-                },
-                // algorithm: theme.darkAlgorithm, // TODO: 【低】ダークモード対応
-            }}
-        >
-            <Layout>
-                <React.StrictMode>
-                    <BrowserRouter>
-                        <HeaderNav/>
-                        <Layout style={{minHeight: '100vh'}}>
-                            <Sider collapsible collapsed={collapsed} onCollapse={(value) => {setCollapsed(value);}}>
-                                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>
-                            </Sider>
-                            <Layout className="site-layout">
-                                {/*
+        <RecoilRoot>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorPrimary: '#632fff',
+                        colorBgBase: '#ffffff',
+                        colorBgContainer: '#ffffff',
+                        colorBgLayout: '#000000',
+                        colorBgElevated: '#00b96b',
+                        colorText: 'rgba(0, 0, 0, 0.88)',
+                        colorTextDescription: 'rgba(0, 0, 0, 0.45)',
+                        colorTextHeading: 'rgba(0, 0, 0, 0.88)'
+                    },
+                    // algorithm: theme.darkAlgorithm, // TODO: 【低】ダークモード対応
+                }}
+            >
+                <Layout>
+                    <React.StrictMode>
+                        <BrowserRouter>
+                            <HeaderNav/>
+                            <Layout style={{minHeight: '100vh'}}>
+                                <Sider collapsible collapsed={collapsed} onCollapse={(value) => {
+                                    setCollapsed(value);
+                                }}>
+                                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>
+                                </Sider>
+                                <Layout className="site-layout">
+                                    {/*
                                 <Header style={{padding: 0, background: '#000000FF'}}/>
                                 */}
-                                <Content style={{margin: '0 16px'}}>
-                                    {/* TODO: パンくずリスト【低】
+                                    <Content style={{margin: '0 16px'}}>
+                                        {/* TODO: パンくずリスト【低】
                             <Breadcrumb style={{margin: '16px 0'}}>
                                 <Breadcrumb.Item>User</Breadcrumb.Item>
                                 <Breadcrumb.Item>Bill</Breadcrumb.Item>
                             </Breadcrumb>
                             */}
-                                    <div>
-                                        <Routes>
-                                            <Route path={redirectPathToSignUp} element={<SignUp/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToLogin} element={<Login/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToHome} element={<Home/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToArtWork} element={<ArtWork/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToArtist} element={<Artist/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToNowPlaying} element={<NowPlaying/>}/>
-                                        </Routes>
-                                        <Routes>
-                                            <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
-                                        </Routes>
-                                    </div>
-                                </Content>
-                                <Footer style={{textAlign: 'center'}}>Ant Design ©2023 Created by Ant UED</Footer>
+                                        <div>
+                                            <Routes>
+                                                <Route path={redirectPathToSignUp} element={<SignUp/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToLogin} element={<Login/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToHome} element={<Home/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToArtWork} element={<ArtWork/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToArtist} element={<Artist/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToNowPlaying} element={<NowPlaying/>}/>
+                                            </Routes>
+                                            <Routes>
+                                                <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
+                                            </Routes>
+                                        </div>
+                                    </Content>
+                                    <Footer style={{textAlign: 'center'}}>Ant Design ©2023 Created by Ant UED</Footer>
+                                </Layout>
                             </Layout>
-                        </Layout>
-                    </BrowserRouter>
-                </React.StrictMode>
-            </Layout>
-        </ConfigProvider>
+                        </BrowserRouter>
+                    </React.StrictMode>
+                </Layout>
+            </ConfigProvider>
+        </RecoilRoot>
   );
 };
 export default App;

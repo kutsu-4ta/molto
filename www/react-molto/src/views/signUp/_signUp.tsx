@@ -2,10 +2,19 @@ import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
 
+import {signUpFormUserIdState} from "../../atoms/signUpFormState";
+import {useRecoilState} from "recoil";
+
 const redirectPathToLogin          = '/login';
 
 const SignUp: () => JSX.Element = () => {
     const [passwordVisible, setPasswordVisible] = React.useState(false);
+    const [signUpFormUserId, setSignUpFormUserId] = useRecoilState(signUpFormUserIdState);
+
+    const onChangeUserIdHandler = (event: React.ChangeEvent<HTMLInputElement>): void =>{
+        const formInputs = event.target.value;
+        setSignUpFormUserId(formInputs);
+    }
 
     return (
         <div className="container" style={{color: "#d7d7d7", paddingLeft: 30}}>
@@ -18,7 +27,11 @@ const SignUp: () => JSX.Element = () => {
                             <p>UserId</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <Input required placeholder="moltoUser"/>
+                            <Input required
+                                   placeholder="moltoUser"
+                                   value={signUpFormUserId}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangeUserIdHandler(event); }}
+                            />
                         </Col>
                     </Row>
                     {/* // TODO: プロトタイプでは電話番号認証はしない
