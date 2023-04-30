@@ -1,6 +1,8 @@
 import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
+import axios from 'axios';
+import swal from "sweetalert";
 
 import {
     // インプット
@@ -116,11 +118,27 @@ const SignUp: () => JSX.Element = () => {
     const submitSignUp = (): void => {
         const formInputData = [
             signUpFormUserId,
-            signUpFormPassWord
+            signUpFormPassWord,
+            signUpFormReInputPassWord
         ];
 
-        // TODO:APIでリクエスト投げる
-        console.log(formInputData);
+        // TODO: 【低】バリデーションエラーがあったら送らない API実装後にやる
+
+        console.log('sendData is ', formInputData);
+        const API_SERVER_URL = 'http://localhost:3000'; // TODO: 仮
+        void axios.get(API_SERVER_URL+'/sanctum/csrf-cookie').then(response => {
+            void axios.post(API_SERVER_URL+`/api/register`, formInputData).then(res => {
+                if(res.data.status === 200){
+                    console.log('成功レスポンス',res);
+                    localStorage.setItem('auth_token', res.data.token);
+                    localStorage.setItem('auth_name', res.data.username);
+                    void swal("Success", res.data.message, "success").then(response => { console.log('成功',response); });
+                    // history.pushState('/')
+                } else {
+                    console.log('失敗レスポンス',res);
+                }
+            });
+        });
     }
 
     return (
