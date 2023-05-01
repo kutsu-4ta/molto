@@ -20,7 +20,7 @@ import SignUp from "./views/signUp/_signUp";
 import { RecoilRoot } from 'recoil';
 
 // 遷移先 TODO: 【低】定数ファイル
-const redirectPathToSignUp         = '/signUp';
+const redirectPathToSignUp         = '/register';
 const redirectPathToLogin          = '/login';
 const redirectPathToHome           = '/home';
 const redirectPathToArtist         = '/artist';

@@ -123,11 +123,9 @@ const SignUp: () => JSX.Element = () => {
         ];
 
         // TODO: 【低】バリデーションエラーがあったら送らない API実装後にやる
-
         console.log('sendData is ', formInputData);
-        const API_SERVER_URL = 'http://localhost:3000'; // TODO: 仮
-        void axios.get(API_SERVER_URL+'/sanctum/csrf-cookie').then(response => {
-            void axios.post(API_SERVER_URL+`/api/register`, formInputData).then(res => {
+        void axios.get('/sanctum/csrf-cookie').then(response => {
+            void axios.post(`/api/register`, formInputData).then(res => {
                 if(res.data.status === 200){
                     console.log('成功レスポンス',res);
                     localStorage.setItem('auth_token', res.data.token);
