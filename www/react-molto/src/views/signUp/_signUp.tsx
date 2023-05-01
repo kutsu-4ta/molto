@@ -116,16 +116,20 @@ const SignUp: () => JSX.Element = () => {
     }
 
     const submitSignUp = (): void => {
+        // TODO: メールアドレス入力フォーム実装
+        const email = 'dev@email.com';
         const formInputData = [
             signUpFormUserId,
+            email,
             signUpFormPassWord,
             signUpFormReInputPassWord
         ];
 
         // TODO: 【低】バリデーションエラーがあったら送らない API実装後にやる
+
         console.log('sendData is ', formInputData);
         void axios.get('/sanctum/csrf-cookie').then(response => {
-            void axios.post(`/api/register`, formInputData).then(res => {
+            void axios.post('/api/signUp', formInputData).then(res => {
                 if(res.data.status === 200){
                     console.log('成功レスポンス',res);
                     localStorage.setItem('auth_token', res.data.token);

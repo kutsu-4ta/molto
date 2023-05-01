@@ -10,3 +10,4 @@
 /.idea/dataSources/303be6f0-ded1-4674-9a6b-783996ceb3db/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
 /.idea/dataSources/303be6f0-ded1-4674-9a6b-783996ceb3db/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
 /docker/db/mysql/data/
+/docker/db/mysql/

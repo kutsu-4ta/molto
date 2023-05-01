@@ -2,7 +2,7 @@ import React from 'react';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Col, Input, Row, Divider } from 'antd';
 
-const redirectPathToSignUp         = '/register';
+const redirectPathToSignUp         = '/signUp';
 
 const Login: () => JSX.Element = () => {
     return (

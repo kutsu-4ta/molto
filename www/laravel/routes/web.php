@@ -16,7 +16,7 @@ use App\Http\Controllers\Home\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('login');
 
 // ホーム画面
 Route::get('/home', [HomeController::class, 'index']);
