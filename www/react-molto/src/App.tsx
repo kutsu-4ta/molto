@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 // アイコン
-import {HomeOutlined, LoginOutlined, SearchOutlined, TeamOutlined} from '@ant-design/icons';
+import {HomeOutlined, SearchOutlined, TeamOutlined} from '@ant-design/icons';
 // antDesignコンポーネント
 import {
     // Breadcrumb,
@@ -17,7 +17,8 @@ import ArtWork from "./views/artWork/_artWork";
 import './styles/styles.css';
 import AccountSetting from "./views/accountSetting/_accountSetting";
 import SignUp from "./views/signUp/_signUp";
-import { RecoilRoot } from 'recoil';
+import {RecoilRoot, useRecoilState} from 'recoil';
+import {authenticationState} from "./atoms/authenticationState";
 
 // 遷移先 TODO: 【低】定数ファイル
 const redirectPathToSignUp         = '/signUp';
@@ -34,7 +35,6 @@ const { Header, Sider, Content, Footer} = Layout;
 const App: React.FunctionComponent = () => {
     const [collapsed, setCollapsed] = useState(false);
     // const { token: { colorBgContainer },} = theme.useToken();
-
     return (
         <RecoilRoot>
             <ConfigProvider
@@ -114,18 +114,13 @@ export default App;
  */
 const HeaderNav: React.FunctionComponent = () => {
 
-    // const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-    //     key,
-    //     label: `nav ${key}`,
-    // }));
-
     const AvatarIcon: React.FunctionComponent = () => {
-        const UserList = ['U', 'Lucy', 'Tom', 'Edward'];
+        const UserList = ['User', 'Lucy', 'Tom', 'Edward'];
         const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
         const GapList = [4, 3, 2, 1];
 
         // 仮
-        const color = ColorList[0];
+        const color = ColorList[3];
         const user  = UserList[0];
         const gap   = GapList[0];
 
@@ -145,6 +140,26 @@ const HeaderNav: React.FunctionComponent = () => {
         ]),
     ];
 
+    const GuestIcon: React.FunctionComponent = () => {
+        const color = '#00a2ae';
+        const user  = 'guest';
+        const gap   = 2;
+
+        return (
+            <Avatar style={{backgroundColor: color, verticalAlign: 'middle'}} size="large" gap={gap}>
+                {user}
+            </Avatar>
+        );
+    }
+
+    const loginButton: MenuProps['items'] = [
+        _generateMenuItem('', 'sub1', <GuestIcon/>, [
+            _generateMenuItem(<a href={'/login'}>SIGNIN</a>, '1')
+        ]),
+    ];
+
+    const [authentication] = useRecoilState(authenticationState);
+    const isLogin: boolean = authentication.uid.length > 0;
     return (
         <Header className="header" style={{paddingRight: 10}}>
             <div style={{display: "flex", placeContent: "space-between", height: 65}}>
@@ -153,7 +168,7 @@ const HeaderNav: React.FunctionComponent = () => {
                     Molto
                 </span>
                 </div>
-                <Menu style={{width: '100%', justifyContent: 'right'}} theme="dark" mode="horizontal" items={headerItems}/>
+                <Menu style={{width: '100%', justifyContent: 'right'}} theme="dark" mode="horizontal" items={isLogin ? headerItems : loginButton}/>
             </div>
         </Header>
     );
@@ -174,6 +189,8 @@ const _generateMenuItem = (label: React.ReactNode, key: React.Key, icon?: React.
         }
     );
 };
+// const logInMenu = (authentication.uid !== '') ? <a href={'/logout'}>logout</a> : <a href={'/login'}>login</a>;
+
 // サイドメニューの項目
 const items: MenuItem[] = [
     _generateMenuItem(<a href={'/home'}>home</a>, '1', <HomeOutlined />),
@@ -182,5 +199,4 @@ const items: MenuItem[] = [
         _generateMenuItem(<a href={'/music-works'}>music</a>, '3'),
         _generateMenuItem(<a href={'/art-works'}>art</a>, '4')
     ]),
-    _generateMenuItem(<a href={'/login'}>login</a>, '10', <LoginOutlined/>),
 ];

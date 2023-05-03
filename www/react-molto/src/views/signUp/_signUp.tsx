@@ -23,12 +23,12 @@ const redirectPathToLogin = '/login';
 const SignUp: () => JSX.Element = () => {
     const [signUpFormUserId, setSignUpFormUserId] = useRecoilState(signUpFormUserIdState);
     const [signUpFormEmail, setSignUpFormEmail] = useRecoilState(signUpFormEmailState);
-    const [signUpFormEmailError, setSignUpFormEmailError] = useRecoilState(signUpFormEmailErrorState);
     const [signUpFormPassWord, setSignUpFormPassWord] = useRecoilState(signUpFormPassWordState);
     const [signUpFormReInputPassWord, setSignUpFormReInputPassWord] = useRecoilState(signUpFormReInputPassWordState);
     const [signUpFormUserIdError, setSignUpFormUserIdError] = useRecoilState(signUpFormUserIdErrorState);
     const [signUpFormPassWordError, setSignUpFormPassWordError] = useRecoilState(signUpFormPassWordErrorState);
     const [signUpFormReInputPassWordError, setSignUpFormReInputPassWordError] = useRecoilState(signUpFormReInputPassWordErrorState);
+    const [signUpFormEmailError, setSignUpFormEmailError] = useRecoilState(signUpFormEmailErrorState);
     const [passwordVisible, setPasswordVisible] = React.useState(false);
 
     interface validationRuleType {
@@ -107,7 +107,7 @@ const SignUp: () => JSX.Element = () => {
         const validationRules: validationRuleType[] = [
             {
                 'rule': 'required',
-                'message': 'PassWord is required'
+                'message': 'Password is required'
             },
             // TODO:バリデーションチェック
             // {
@@ -119,13 +119,13 @@ const SignUp: () => JSX.Element = () => {
         setSignUpFormPassWordError(errorMessage);
         setSignUpFormPassWord(formInputs);
     }
-    const onChangeReInputPassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const onChangeReInputPasswordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         // TODO:バリデーションチェック
         const formInputs = event.target.value;
         const validationRules: validationRuleType[] = [
             {
                 'rule': 'required',
-                'message': 'PassWord(ReInput) is required'
+                'message': 'Password(ReInput) is required'
             },
             // TODO:バリデーションチェック
             // {
@@ -153,7 +153,10 @@ const SignUp: () => JSX.Element = () => {
             void axios.post('/api/signUp', formInputData).then(res => {
                 if(res.data.status === 200){
                     console.log('成功レスポンス',res.data.status);
-                    void swal("Success", res.data.message, "success").then(response => { console.log('成功',response); });
+                    void swal("Success", res.data.message, "success").then(response => {
+                        console.log('成功',response);
+                        window.location.href = redirectPathToLogin;
+                    });
                     // history.pushState('/')
                 } else {
                     console.log('失敗レスポンス',res.data.validation_errors);
@@ -210,7 +213,7 @@ const SignUp: () => JSX.Element = () => {
                     <Divider/>
                     <Row>
                         <Col span={3} offset={6} style={{marginRight:0}}>
-                            <p>PassWord</p>
+                            <p>Password</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
                             <p className={"form-error"}>&nbsp;{signUpFormPassWordError}</p>
@@ -226,7 +229,7 @@ const SignUp: () => JSX.Element = () => {
                     <Divider/>
                     <Row>
                         <Col span={3} offset={6} style={{marginRight:0}}>
-                            <p>PassWord (ReInput)</p>
+                            <p>Password (ReInput)</p>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
                             <p className={"form-error"}>&nbsp;{signUpFormReInputPassWordError}</p>
@@ -234,7 +237,7 @@ const SignUp: () => JSX.Element = () => {
                                             placeholder="inputStrongPassWord"
                                             iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
                                             value={signUpFormReInputPassWord}
-                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangeReInputPassWordHandler(event); }}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangeReInputPasswordHandler(event); }}
                                             visibilityToggle={{visible: passwordVisible, onVisibleChange: setPasswordVisible}}
                             />
                         </Col>
@@ -252,7 +255,9 @@ const SignUp: () => JSX.Element = () => {
                         <Col span={3} offset={6} style={{marginRight:0}}>
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
-                            <a href={redirectPathToLogin}>please login if you have a account.</a>
+                            <span>please </span>
+                            <a href={redirectPathToLogin}>login</a>
+                            <span> if you have a account.</span>
                         </Col>
                     </Row>
                 </div>
