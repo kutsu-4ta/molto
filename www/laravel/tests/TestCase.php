@@ -2,14 +2,13 @@
 
 namespace Tests;
 
-
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
-use PhpParser\Node\Scalar\String_;
 use Tests\Services\RedirectAtDocumentRoot;
 
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase implements TestCaseInterface
 {
+    public string $endPoint = '';
     use CreatesApplication;
     use RedirectAtDocumentRoot;
 
@@ -23,4 +22,5 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
         Artisan::call('migrate:refresh');
     }
+
 }
