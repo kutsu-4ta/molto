@@ -1,0 +1,23 @@
+Index: www/react-molto/src/setupProxy.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>const { createProxyMiddleware } = require(\"http-proxy-middleware\");\n\nmodule.exports = function (app) {\n    app.use(\n        \"/signUp\",\n        createProxyMiddleware({\n            target: \"http://localhost:3000\",\n            changeOrigin: true,\n        })\n    );\n};
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/www/react-molto/src/setupProxy.js b/www/react-molto/src/setupProxy.js
+--- a/www/react-molto/src/setupProxy.js	(revision a23651bec7c973fbd570943efe91d2b23fa07e11)
++++ b/www/react-molto/src/setupProxy.js	(date 1682866398927)
+@@ -1,10 +1,9 @@
+ const { createProxyMiddleware } = require("http-proxy-middleware");
+ 
+ module.exports = function (app) {
+-    app.use(
+-        "/signUp",
++    app.use('/api/register',
+         createProxyMiddleware({
+-            target: "http://localhost:3000",
++            target: "http://localhost:3002",
+             changeOrigin: true,
+         })
+     );
