@@ -19,7 +19,8 @@ class signUpController extends Controller
         $this->registerProperties = [
             'name',
             'email',
-            'password'
+            'password',
+            'reinputPassword'
         ];
     }
 
@@ -36,6 +37,14 @@ class signUpController extends Controller
         if($validator->fails()){
             return response()->json([
                 'validation_errors'=>$validator->messages(),
+            ]);
+        }
+
+        $isSafeReinputPassword = $request->get('password') === $request->get('reinputPassword');
+        if(!$isSafeReinputPassword){
+            return response()->json([
+                'status'=>405,
+                'message'=>'password is not match with reinput'
             ]);
         }
 
