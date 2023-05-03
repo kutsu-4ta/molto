@@ -9,6 +9,15 @@ export const signUpFormUserIdErrorState = atom({
     default: ''
 });
 
+export const signUpFormEmailState = atom({
+    key: 'signUpFormEmail' ,
+    default: ''
+});
+export const signUpFormEmailErrorState = atom({
+    key: 'signUpFormEmailError' ,
+    default: ''
+});
+
 export const signUpFormPassWordState = atom({
     key: 'signUpFormPassWord' ,
     default: ''

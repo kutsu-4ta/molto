@@ -9,10 +9,12 @@ import {
     signUpFormUserIdState,
     signUpFormPassWordState,
     signUpFormReInputPassWordState,
+    signUpFormEmailState,
     // エラーメッセージ
     signUpFormUserIdErrorState,
     signUpFormPassWordErrorState,
-    signUpFormReInputPassWordErrorState
+    signUpFormReInputPassWordErrorState,
+    signUpFormEmailErrorState
 } from "../../atoms/signUpFormState";
 import {useRecoilState} from "recoil";
 
@@ -20,6 +22,8 @@ const redirectPathToLogin = '/login';
 
 const SignUp: () => JSX.Element = () => {
     const [signUpFormUserId, setSignUpFormUserId] = useRecoilState(signUpFormUserIdState);
+    const [signUpFormEmail, setSignUpFormEmail] = useRecoilState(signUpFormEmailState);
+    const [signUpFormEmailError, setSignUpFormEmailError] = useRecoilState(signUpFormEmailErrorState);
     const [signUpFormPassWord, setSignUpFormPassWord] = useRecoilState(signUpFormPassWordState);
     const [signUpFormReInputPassWord, setSignUpFormReInputPassWord] = useRecoilState(signUpFormReInputPassWordState);
     const [signUpFormUserIdError, setSignUpFormUserIdError] = useRecoilState(signUpFormUserIdErrorState);
@@ -79,6 +83,25 @@ const SignUp: () => JSX.Element = () => {
         setSignUpFormUserIdError(errorMessage);
         setSignUpFormUserId(formInputs);
     }
+
+    const onChangeEmailHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const formInputs = event.target.value;
+        const validationRules: validationRuleType[] = [
+            {
+                'rule': 'required',
+                'message': 'Email is required'
+            },
+            // TODO:バリデーションチェック
+            // {
+            //     'rule': '^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{4,15}$',
+            //     'message':'characters you can use are these \'a-Z, 0-9, ./?-!@#$%&*()_+\' '
+            // }
+        ];
+        const errorMessage: string = validationCheck(formInputs, validationRules);
+        setSignUpFormEmailError(errorMessage);
+        setSignUpFormEmail(formInputs);
+    }
+
     const onChangePassWordHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const formInputs = event.target.value;
         const validationRules: validationRuleType[] = [
@@ -116,14 +139,12 @@ const SignUp: () => JSX.Element = () => {
     }
 
     const submitSignUp = (): void => {
-        // TODO: メールアドレス入力フォーム実装
-        const email = 'dev@email.com';
-        const formInputData = [
-            signUpFormUserId,
-            email,
-            signUpFormPassWord,
-            signUpFormReInputPassWord
-        ];
+        const formInputData = {
+            'uid':signUpFormUserId,
+            'email': signUpFormEmail,
+            'password': signUpFormPassWord,
+            'reinputPassword': signUpFormReInputPassWord
+        };
 
         // TODO: 【低】バリデーションエラーがあったら送らない API実装後にやる
 
@@ -131,13 +152,12 @@ const SignUp: () => JSX.Element = () => {
         void axios.get('/sanctum/csrf-cookie').then(response => {
             void axios.post('/api/signUp', formInputData).then(res => {
                 if(res.data.status === 200){
-                    console.log('成功レスポンス',res);
-                    localStorage.setItem('auth_token', res.data.token);
-                    localStorage.setItem('auth_name', res.data.username);
+                    console.log('成功レスポンス',res.data.status);
                     void swal("Success", res.data.message, "success").then(response => { console.log('成功',response); });
                     // history.pushState('/')
                 } else {
-                    console.log('失敗レスポンス',res);
+                    console.log('失敗レスポンス',res.data.validation_errors);
+                    void swal("Failed", res.data.message, "error").then(response => { console.log('失敗',response); });
                 }
             });
         });
@@ -162,6 +182,21 @@ const SignUp: () => JSX.Element = () => {
                             />
                         </Col>
                     </Row>
+                    <Divider/>
+                    <Row>
+                        <Col span={3} offset={6} style={{marginRight:0}}>
+                            <p>Email</p>
+                        </Col>
+                        <Col span={9} offset={6} style={{marginLeft:0}}>
+                            <p className={"form-error"}>&nbsp;{signUpFormEmailError}</p>
+                            <Input required
+                                   placeholder="moltoUser"
+                                   value={signUpFormEmail}
+                                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => { onChangeEmailHandler(event); }}
+                            />
+                        </Col>
+                    </Row>
+
                     {/* // TODO: プロトタイプでは電話番号認証はしない
                     <Row>
                         <Col span={3} offset={6} style={{marginRight:0}}>
