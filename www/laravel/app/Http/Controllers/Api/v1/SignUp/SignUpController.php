@@ -36,6 +36,8 @@ class signUpController extends Controller
 
         if($validator->fails()){
             return response()->json([
+                'status'=>405,
+                'message'=>'validation Error',
                 'validation_errors'=>$validator->messages(),
             ]);
         }
