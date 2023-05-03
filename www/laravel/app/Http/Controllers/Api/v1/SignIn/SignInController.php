@@ -21,6 +21,11 @@ class SignInController extends Controller
             'uidOrEmail',
             'password',
         ];
+
+        $this->logOutPropaties = [
+          'uid',
+          'token'
+        ];
     }
 
     public function logIn(Request $request){
@@ -79,15 +84,25 @@ class SignInController extends Controller
             'status' => 200,
             'message' => 'login success!',
             'uid' => $authUser->uid,
+            'name' => $authUser->name,
+            'email'=> $authUser->email,
             'token' => $token
         ]);
     }
 
-    public function logOut(){
-        auth()->user()->tokens()->delete();
+    public function logOut(Request $request){
+
+        $request->only($this->logOutPropaties);
+
+        $request->get('uid');
+        $request->get('token');
+
+        $authUser = User::where('uid',$request->get('uid'))->first();
+        Auth::logout(); // TODO: tokenUpdateに変更
+
         return response()->json([
             'status'=>200,
-            'message'=>'ログアウト成功',
+            'message'=>'signOut success!',
         ]);
     }
 }
