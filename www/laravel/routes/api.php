@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\v1\SignUp\signUpController;
+use \App\Http\Controllers\Api\v1\SignUp\SignUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +15,8 @@ use \App\Http\Controllers\Api\v1\SignUp\signUpController;
 |
 */
 
-Route::middleware('auth:sanctum')->post('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/signUp', [signUpController::class, 'register']);
+Route::post('/signUp', [SignUpController::class, 'register'])->name('signup_register');;

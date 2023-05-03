@@ -11,10 +11,31 @@ use Illuminate\Support\Facades\Validator;
 
 class signUpController extends Controller
 {
+
+    private $registerProperties;
+
+    public function __construct()
+    {
+        $this->registerProperties = [
+            'name',
+            'email',
+            'password'
+        ];
+    }
+
     public function register(Request $request){
-        dd('request',$request->all());
+
+        // TODO:仮
+        $request->merge([
+            'uid'     => 'DEV',
+            'email'    => 'dev@mail.com',
+            'password' => 'devepass'
+        ]);
+
+        $request->only($this->registerProperties);
+
         $validator = Validator::make($request->all(), [
-            'name'=>'required|max:191',
+            'uid'=>'required|max:191',
             'email'=>'required|email|max:191|unique:users,email',
             'password'=>'required|min:8',
         ]);
@@ -23,22 +44,22 @@ class signUpController extends Controller
             return response()->json([
                 'validation_errors'=>$validator->messages(),
             ]);
-        } else {
-            $user = User::create([
-                'name'=>$request->name,
-                'email'=>$request->email,
-                'password'=>Hash::make($request->password),
-            ]);
-
-            $token = $user->createToken($user->email.'_Token')->plainTextToken;
-
-            return response()->json([
-                'status'=>200,
-                'username'=>$user->name,
-                'token'=>$token,
-                'message'=>'Registerd Successfully'
-            ]);
         }
+
+        $user = User::create([
+            'uid'=>$request->uid,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+        ]);
+
+        $token = $user->createToken($user->email.'_Token')->plainTextToken;
+
+        return response()->json([
+            'status'=>200,
+            'username'=>$user->name,
+            'token'=>$token,
+            'message'=>'Registerd Successfully'
+        ]);
     }
 
     public function login(Request $request) {
