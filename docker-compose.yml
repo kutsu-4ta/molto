@@ -18,11 +18,11 @@ services:
     build: ./docker/db
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=docker_db
+      - MYSQL_DATABASE=local_db
       - MYSQL_USER=docker_user
       - MYSQL_PASSWORD=docker_pass
     ports:
       - '3306:3306'
     volumes:
-#      - ./db/mysql/:/var/lib/mysql/
-      - ./db/mysql/init:/docker-entrypoint-initdb.d
+      - ./docker/db/mysql/:/var/lib/mysql/
+      - ./docker/db/init:/docker-entrypoint-initdb.d
