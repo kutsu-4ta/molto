@@ -25,17 +25,10 @@ class signUpController extends Controller
 
     public function register(Request $request){
 
-        // TODO:仮
-        $request->merge([
-            'uid'     => 'DEV',
-            'email'    => 'dev@mail.com',
-            'password' => 'devepass'
-        ]);
-
         $request->only($this->registerProperties);
 
         $validator = Validator::make($request->all(), [
-            'uid'=>'required|max:191',
+            'uid'=>'required|max:191|min:6|unique:users,uid',
             'email'=>'required|email|max:191|unique:users,email',
             'password'=>'required|min:8',
         ]);
