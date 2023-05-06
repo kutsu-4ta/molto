@@ -56,6 +56,7 @@ const NowPlaying: React.FunctionComponent = () => {
                                         <Slider defaultValue={0} key="slider"/>
                                     ]}
                                 >
+
                                     <Meta
                                         title={
                                             <a href={redirectPathToArtWork} style={{color:'rgb(0,0,0)'}}>{nowPlaying.title}</a>
@@ -70,6 +71,11 @@ const NowPlaying: React.FunctionComponent = () => {
                                     />
                                 </Card>
                             </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12} offset={6}>
+
                         </Col>
                     </Row>
                 </div>

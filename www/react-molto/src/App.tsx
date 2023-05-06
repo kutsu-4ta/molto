@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { Route, BrowserRouter, Routes, Link } from "react-router-dom";
+import Iframe from 'react-iframe'
 // アイコン
 import {HomeOutlined, SearchOutlined, TeamOutlined} from '@ant-design/icons';
 // antDesignコンポーネント
@@ -96,6 +97,13 @@ const App: React.FunctionComponent = () => {
                                                 <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
                                             </Routes>
                                         </div>
+                                        <Iframe
+                                            width="100%"
+                                            height="100"
+                                            scrolling="yes"
+                                            allow="autoplay"
+                                            url={"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/228174863&color=%238400ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"}
+                                        />
                                     </Content>
                                     <Footer style={{textAlign: 'center'}}>Ant Design ©2023 Created by Ant UED</Footer>
                                 </Layout>
@@ -133,10 +141,10 @@ const HeaderNav: React.FunctionComponent = () => {
 
     const headerItems: MenuProps['items'] = [
         _generateMenuItem('', 'sub1', <AvatarIcon/>, [
-            _generateMenuItem(<a href={'/profile'}>profile</a>, '1'),
-            _generateMenuItem(<a href={'/your-works'}>works</a>, '2'),
-            _generateMenuItem(<a href={'/wip'}>WIP</a>, '3'),
-            _generateMenuItem(<a href={redirectPathToAccountSetting}>account Setting</a>, '4'),
+            _generateMenuItem(<Link to={'/profile'}>profile</Link>, '1'),
+            _generateMenuItem(<Link to={'/your-works'}>works</Link>, '2'),
+            _generateMenuItem(<Link to={'/wip'}>WIP</Link>, '3'),
+            _generateMenuItem(<Link to={redirectPathToAccountSetting}>account Setting</Link>, '4'),
         ]),
     ];
 
@@ -154,7 +162,7 @@ const HeaderNav: React.FunctionComponent = () => {
 
     const loginButton: MenuProps['items'] = [
         _generateMenuItem('', 'sub1', <GuestIcon/>, [
-            _generateMenuItem(<a href={'/login'}>SIGNIN</a>, '1')
+            _generateMenuItem(<Link to={'/login'}>SIGNIN</Link>, '1')
         ]),
     ];
 
@@ -193,10 +201,11 @@ const _generateMenuItem = (label: React.ReactNode, key: React.Key, icon?: React.
 
 // サイドメニューの項目
 const items: MenuItem[] = [
-    _generateMenuItem(<a href={'/home'}>home</a>, '1', <HomeOutlined />),
-    _generateMenuItem(<a href={'/search'}>search</a>, '2', <SearchOutlined />),
+    _generateMenuItem(
+        <Link to="/home">home</Link>, '1', <HomeOutlined />),
+    _generateMenuItem(<Link to={'/search'}>search</Link>, '2', <SearchOutlined />),
     _generateMenuItem('Libraries', 'sub2', <TeamOutlined />, [
-        _generateMenuItem(<a href={'/music-works'}>music</a>, '3'),
-        _generateMenuItem(<a href={'/art-works'}>art</a>, '4')
+        _generateMenuItem(<Link to={'/music-works'}>music</Link>, '3'),
+        _generateMenuItem(<Link to={'/art-works'}>art</Link>, '4')
     ]),
 ];

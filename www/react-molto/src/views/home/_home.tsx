@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {Row, Col} from "antd";
 import './_home_style.css';
@@ -9,12 +10,13 @@ const redirectPathToArtist  = '/artist';
 const redirectPathToArtWork = '/artWork';
 const redirectPathToNowPlaying = '/nowPlaying';
 
+
 const Home: React.FunctionComponent = () => {
     // TODO: 作品情報をAPIで取得
     const featuredWorkCardItems: WorkCardItemType[] = [
         {   title:'Molto Lennon',
             description: 'this is my first work.',
-            coverImage: <img src="https://picsum.photos/id/1011/200/200" alt="featured_2"/>,
+            coverImage: <Link to={redirectPathToNowPlaying}><img src="https://picsum.photos/id/1011/200/200" alt="featured_2"/></Link>,
             isHover: true,
             style: {width: 300},
         },
@@ -112,7 +114,7 @@ const Home: React.FunctionComponent = () => {
     for (let i = 0; i < newReleaseWorkCardItems.length; i++){
         newReleaseWorkCards.push(
             <Col span={8} style={{paddingTop: 32, paddingBottom: 32}}>
-                <a href={redirectPathToNowPlaying}>
+                <Link to={redirectPathToNowPlaying}>
                     <WorkCard coverImage={newReleaseWorkCardItems[i].coverImage}
                               title={newReleaseWorkCardItems[i].title}
                               titleLinkPath={redirectPathToArtist}
@@ -121,7 +123,7 @@ const Home: React.FunctionComponent = () => {
                               isHover={newReleaseWorkCardItems[i].isHover}
                               style={newReleaseWorkCardItems[i].style}
                     />
-                </a>
+                </Link>
             </Col>
         )
     }

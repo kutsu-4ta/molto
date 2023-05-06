@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { Button, Col, Input, Row, Divider } from 'antd';
 import axios from "axios";
 import swal from "sweetalert";
@@ -178,7 +179,7 @@ const Login: () => JSX.Element = () => {
                         </Col>
                         <Col span={9} offset={6} style={{marginLeft:0}}>
                             <span>please </span>
-                            <a href={redirectPathToSignUp}>sign up</a>
+                            <Link to={redirectPathToSignUp}>sign up</Link>
                             <span> if you do not have any account.</span>
                         </Col>
                     </Row>

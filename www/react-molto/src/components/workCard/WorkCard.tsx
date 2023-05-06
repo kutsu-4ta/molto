@@ -1,11 +1,12 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { Card } from 'antd';
 import './WorkCard_styles.css';
 
 const { Meta } = Card;
 
 // カードクリック時の遷移先 MEMO: 再生画面か詳細画面か考え中
-const redirectPath = '/nowPlaying';
+// const redirectNowPlayingPath = '/nowPlaying';
 
 interface WorkCardItemType {
     title: string,
@@ -28,8 +29,8 @@ const WorkCard:(workCardItem: WorkCardItemType) => JSX.Element = (workCardItem: 
   const coverImage       = workCardItem.coverImage;
   const isHover          = (workCardItem.isHover === true)
   const style            = workCardItem.style;
-  const titleLinkPath    = workCardItem.titleLinkPath;
-  const describeLinkPath = workCardItem.describeLinkPath;
+  const titleLinkPath    = (workCardItem.titleLinkPath !== undefined) ? workCardItem.titleLinkPath : '';
+  const describeLinkPath = (workCardItem.describeLinkPath !== undefined) ? workCardItem.describeLinkPath : '';
 
 
   return (
@@ -41,8 +42,8 @@ const WorkCard:(workCardItem: WorkCardItemType) => JSX.Element = (workCardItem: 
           cover={coverImage}
       >
           <Meta
-              title={<a href={titleLinkPath} style={{color:'rgb(0,0,0)'}}>{title}</a>}
-              description={<a href={describeLinkPath} style={{color:'rgb(98,98,98)'}}>{description}</a>}/>
+              title={<Link to={titleLinkPath} style={{color:'rgb(0,0,0)'}}>{title}</Link>}
+              description={<Link to={describeLinkPath} style={{color:'rgb(98,98,98)'}}>{description}</Link>}/>
       </Card>
   );
 }
@@ -56,5 +57,5 @@ const showDetail:(workCardItem: WorkCardItemType) => void = (workCardItem: WorkC
     // TODO: stateにセット
     console.log(workCardItem);
 
-    window.location.href = redirectPath;
+    // window.location.href = redirectPath;
 }

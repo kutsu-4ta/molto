@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {Row, Col, Slider, Card, Image} from "antd";
 import {type WorkCardItemType} from "../../components/workCard/WorkCard";
@@ -58,13 +59,13 @@ const ArtWork: React.FunctionComponent = () => {
                                 >
                                     <Meta
                                         title={
-                                            <a href={redirectPathToArtWork} style={{color:'rgb(0,0,0)'}}>{nowPlaying.title}</a>
+                                            <Link to={redirectPathToArtWork} style={{color:'rgb(0,0,0)'}}>{nowPlaying.title}</Link>
                                         }
                                         description={
-                                            <a href={redirectPathToArtist} style={{color:'rgb(98,98,98)'}}>
+                                            <Link to={redirectPathToArtist} style={{color:'rgb(98,98,98)'}}>
                                                 <UserOutlined style={{paddingRight:20}}/>
                                                 {nowPlaying.artist}
-                                            </a>
+                                            </Link>
                                         }
                                         // avatar={<UserOutlined/>}
                                     />
