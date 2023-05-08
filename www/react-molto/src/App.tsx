@@ -97,6 +97,8 @@ const App: React.FunctionComponent = () => {
                                                 <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
                                             </Routes>
                                         </div>
+                                    </Content>
+                                    <Footer style={{textAlign: 'center'}}>
                                         <Iframe
                                             width="100%"
                                             height="100"
@@ -104,8 +106,7 @@ const App: React.FunctionComponent = () => {
                                             allow="autoplay"
                                             url={"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/228174863&color=%238400ff&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"}
                                         />
-                                    </Content>
-                                    <Footer style={{textAlign: 'center'}}>Ant Design ©2023 Created by Ant UED</Footer>
+                                        Ant Design ©2023 Created by Ant UED</Footer>
                                 </Layout>
                             </Layout>
                         </BrowserRouter>
