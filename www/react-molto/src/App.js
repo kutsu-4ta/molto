@@ -13,12 +13,22 @@ import Home from "./views/home/Home";
 import Artist from "./views/artist/Artist";
 import NowPlaying from "./views/nowPlaying/NowPlaying";
 import {Header} from "antd/es/layout/layout";
-import {HomeOutlined, SearchOutlined, TeamOutlined} from "@ant-design/icons";
+import './styles/styles.css';
+import {
+    AntDesignOutlined,
+    AudioOutlined, AuditOutlined,
+    DesktopOutlined, FileOutlined,
+    HomeOutlined,
+    SearchOutlined,
+    TeamOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
+import SubMenu from "antd/es/menu/SubMenu";
 
 // 遷移先 TODO: 【低】定数ファイル
 const redirectPathToSignUp         = 'signUp';
-const redirectPathToSignIn          = 'signIn';
+const redirectPathToSignIn         = 'signIn';
 const redirectPathToHome           = 'home';
 const redirectPathToArtist         = 'artist';
 const redirectPathToNowPlaying     = 'nowPlaying';
@@ -26,47 +36,6 @@ const redirectPathToAccountSetting = 'accountSetting';
 
 const App = () => {
     const [collapsed, setCollapsed] = useState(false);
-    return (
-        <ConfigProvider
-            theme={{
-                token: {
-                    colorPrimary: '#632fff',
-                    colorBgBase: '#ffffff',
-                    colorBgContainer: '#ffffff',
-                    colorBgLayout: '#000000',
-                    colorBgElevated: '#00b96b',
-                    colorText: 'rgba(0, 0, 0, 0.88)',
-                    colorTextDescription: 'rgba(0, 0, 0, 0.45)',
-                    colorTextHeading: 'rgba(0, 0, 0, 0.88)'
-                },
-                // algorithm: theme.darkAlgorithm, // TODO: 【低】ダークモード対応
-            }}
-        >
-            <BrowserRouter>
-            {/*<HeaderNav/>*/}
-                <Sider collapsible collapsed={collapsed} onCollapse={(value) => {
-                    setCollapsed(value);
-                }}>
-                    {/*<Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items}/>*/}
-                </Sider>
-                <Routes>
-                    <Route path={redirectPathToSignUp} element={<SignUp/>}/>
-                    <Route path={redirectPathToSignIn} element={<SignIn/>}/>
-                    <Route path={redirectPathToHome} element={<Home/>}/>
-                    <Route path={redirectPathToArtist} element={<Artist/>}/>
-                    <Route path={redirectPathToNowPlaying} element={<NowPlaying/>}/>
-                    <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
-                </Routes>
-            </BrowserRouter>
-        </ConfigProvider>
-    );
-};
-export default App;
-
-/**
- * ヘッダーメニューコンポーネント
- */
-const HeaderNav = () => {
 
     const AvatarIcon = () => {
         const UserList = ['User', 'Lucy', 'Tom', 'Edward'];
@@ -84,73 +53,68 @@ const HeaderNav = () => {
             </Avatar>
         );
     }
-
-    const headerItems = [
-        _generateMenuItem('', 'sub1', <AvatarIcon/>, [
-            _generateMenuItem(<Link to={'/profile'}>profile</Link>, '1'),
-            _generateMenuItem(<Link to={'/your-works'}>works</Link>, '2'),
-            _generateMenuItem(<Link to={'/wip'}>WIP</Link>, '3'),
-            _generateMenuItem(<Link to={redirectPathToAccountSetting}>account Setting</Link>, '4'),
-        ]),
-    ];
-
-    const GuestIcon = () => {
-        const color = '#00a2ae';
-        const user = 'guest';
-        const gap = 2;
-
-        return (
-            <Avatar style={{backgroundColor: color, verticalAlign: 'middle'}} size="large" gap={gap}>
-                {user}
-            </Avatar>
-        );
-    }
-
-    const loginButton = [
-        _generateMenuItem('', 'sub1', <GuestIcon/>, [
-            _generateMenuItem(<Link to={'/login'}>SIGN_IN</Link>, '1')
-        ]),
-    ];
-
-    const isLogin = false;
     return (
-        <Header className="header" style={{paddingRight: 10}}>
-            <div style={{display: "flex", placeContent: "space-between", height: 65}}>
-                <div className="logo" style={{paddingLeft: 30, paddingRight: 30}}>
-                <span style={{color: "#a12fff", fontSize: 30}}>
-                    Molto
-                </span>
-                </div>
-                <Menu style={{width: '100%', justifyContent: 'right'}} theme="dark" mode="horizontal"
-                      items={isLogin ? headerItems : loginButton}/>
-            </div>
-        </Header>
-    );
-}
-
-/**
- * サイドメニューの項目を生成する
- * @param label    ラベル
- * @param key      インデックスキー
- * @param icon     アイコン
- * @param children 子項目
- */
-const _generateMenuItem = (key, icon, children, label) => {
-    return (
-        {
-            key, icon, children, label
-        }
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#632fff',
+                    colorBgBase: '#ffffff',
+                    colorBgContainer: '#ffffff',
+                    colorBgLayout: '#000000',
+                    colorBgElevated: '#00b96b',
+                    colorText: 'rgba(0, 0, 0, 0.88)',
+                    colorTextDescription: 'rgba(0, 0, 0, 0.45)',
+                    colorTextHeading: 'rgba(0, 0, 0, 0.88)'
+                },
+                // algorithm: theme.darkAlgorithm, // TODO: 【低】ダークモード対応
+            }}
+        >
+            <BrowserRouter>
+                <Layout>
+                    <Header style={{position: 'fixed', zIndex: 1, width: '100%'}}>
+                        <div style={{display: "flex", placeContent: "space-between", height: 65}}>
+                            <div className="logo" style={{paddingLeft: 30, paddingRight: 30}}>
+                                <span style={{color: "#a12fff", fontSize: 30}}>
+                                    Molto
+                                </span>
+                            </div>
+                            <Menu theme="dark" mode="horizontal">
+                                <SubMenu key="UserIcon" icon={<AvatarIcon/>} title="">
+                                    <Menu.Item key="1"><Link to={'/profile'}>Profile</Link></Menu.Item>
+                                    <Menu.Item key="2"><Link to={'/your-works'}>Works</Link></Menu.Item>
+                                    <Menu.Item key="3"><Link to={'/wip'}>WIP</Link></Menu.Item>
+                                    <Menu.Item key="4"><Link to={redirectPathToAccountSetting}>AccountSetting</Link></Menu.Item>
+                                </SubMenu>
+                            </Menu>
+                        </div>
+                    </Header>
+                    <Layout className="site-layout" style={{paddingTop: 70}}>
+                        <Sider collapsible collapsed={collapsed} onCollapse={(value) => {
+                            setCollapsed(value);
+                        }}>
+                            <div className="logo"/>
+                            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                                <Menu.Item key="1" icon={<HomeOutlined/>}><Link to={'/home'}>Home</Link></Menu.Item>
+                                <Menu.Item key="2" icon={<SearchOutlined/>}><Link to={'/search'}>Search</Link></Menu.Item>
+                                <SubMenu key="sub1" icon={<TeamOutlined/>} title="Libraries">
+                                    <Menu.Item key="3" icon={<AudioOutlined/>}><Link to={'/music'}>Music</Link></Menu.Item>
+                                    <Menu.Item key="4" icon={<AntDesignOutlined/>}><Link to={'/art'}>Art</Link></Menu.Item>
+                                </SubMenu>
+                                <Menu.Item key="5" icon={<AuditOutlined/>}><Link to={'/nowPlaying'}>NowPlaying</Link></Menu.Item>
+                            </Menu>
+                        </Sider>
+                        <Routes>
+                            <Route path={redirectPathToSignUp} element={<SignUp/>}/>
+                            <Route path={redirectPathToSignIn} element={<SignIn/>}/>
+                            <Route path={redirectPathToHome} element={<Home/>}/>
+                            <Route path={redirectPathToArtist} element={<Artist/>}/>
+                            <Route path={redirectPathToNowPlaying} element={<NowPlaying/>}/>
+                            <Route path={redirectPathToAccountSetting} element={<AccountSetting/>}/>
+                        </Routes>
+                    </Layout>
+                </Layout>
+            </BrowserRouter>
+        </ConfigProvider>
     );
 };
-// const logInMenu = (authentication.uid !== '') ? <a href={'/logout'}>logout</a> : <a href={'/login'}>login</a>;
-
-// サイドメニューの項目
-const items = [
-    _generateMenuItem(
-        <Link to="/home">home</Link>, '1', <HomeOutlined/>),
-    _generateMenuItem(<Link to={'/search'}>search</Link>, '2', <SearchOutlined/>),
-    _generateMenuItem('Libraries', 'sub2', <TeamOutlined/>, [
-        _generateMenuItem(<Link to={'/music-works'}>music</Link>, '3'),
-        _generateMenuItem(<Link to={'/art-works'}>art</Link>, '4')
-    ]),
-];
+export default App;
